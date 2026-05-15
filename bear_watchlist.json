@@ -1,0 +1,78 @@
+{
+  "watchlist_name": "OptionsAlpha_Bear",
+  "version": "1.0",
+  "max_size": 12,
+  "min_size": 6,
+  "last_updated": "2026-05-11",
+  "notes": "Bearish options watchlist for bear put debit spreads. Separate from bullish options watchlist (watchlist.json). Names selected for clean downtrend behavior, high individual beta, and liquid put options. AMD intentionally overlaps with bullish watchlist — scanner resolves conflicts by taking the higher-scoring direction only.",
+  "tickers": [
+    {
+      "symbol": "TSLA",
+      "added_date": "2026-05-11",
+      "added_reason": "High beta, clean extended downtrends, excellent put liquidity, 4-8% ATR",
+      "tier": "core"
+    },
+    {
+      "symbol": "MSTR",
+      "added_date": "2026-05-11",
+      "added_reason": "Leveraged Bitcoin proxy, violent downswings, very liquid options",
+      "tier": "core"
+    },
+    {
+      "symbol": "SMCI",
+      "added_date": "2026-05-11",
+      "added_reason": "Volatile AI infrastructure name, prone to sharp drops, liquid puts",
+      "tier": "core"
+    },
+    {
+      "symbol": "AMD",
+      "added_date": "2026-05-11",
+      "added_reason": "Trades both sides cleanly. Also on bullish watchlist. Scanner picks higher-scoring direction.",
+      "tier": "core"
+    },
+    {
+      "symbol": "NFLX",
+      "added_date": "2026-05-11",
+      "added_reason": "Clean trend behavior both up and down, liquid options both sides",
+      "tier": "core"
+    },
+    {
+      "symbol": "DDOG",
+      "added_date": "2026-05-11",
+      "added_reason": "SaaS with high valuation sensitivity, drops cleanly on sector rotation",
+      "tier": "core"
+    },
+    {
+      "symbol": "PANW",
+      "added_date": "2026-05-11",
+      "added_reason": "Cybersecurity, reverses sharply after extended runs, good put OI",
+      "tier": "core"
+    },
+    {
+      "symbol": "MELI",
+      "added_date": "2026-05-11",
+      "added_reason": "EM tech exposure, sensitive to macro shifts, clean downtrends",
+      "tier": "core"
+    },
+    {
+      "symbol": "RIVN",
+      "added_date": "2026-05-11",
+      "added_reason": "High volatility, excellent put premium, clean bearish structure",
+      "tier": "core"
+    },
+    {
+      "symbol": "INTC",
+      "added_date": "2026-05-11",
+      "added_reason": "Secular underperformer vs NDX peers, consistent relative weakness",
+      "tier": "core"
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-05-11",
+      "action": "initialized",
+      "symbol": "ALL",
+      "reason": "Initial bear watchlist for Options Alpha V9.9 bidirectional protocol"
+    }
+  ]
+}

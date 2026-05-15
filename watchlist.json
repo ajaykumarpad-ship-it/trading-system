@@ -1,0 +1,78 @@
+{
+  "watchlist_name": "AlphaProtocol_Active",
+  "version": "1.0",
+  "max_size": 12,
+  "min_size": 6,
+  "last_updated": "2026-05-09",
+  "tickers": [
+    {
+      "symbol": "NVDA",
+      "added_date": "2026-05-09",
+      "added_reason": "Initial watchlist - AI chip leader, strong RS, clean uptrend",
+      "tier": "core"
+    },
+    {
+      "symbol": "META",
+      "added_date": "2026-05-09",
+      "added_reason": "Initial watchlist - AI monetization, post-earnings strength",
+      "tier": "core"
+    },
+    {
+      "symbol": "MSFT",
+      "added_date": "2026-05-09",
+      "added_reason": "Initial watchlist - cloud and enterprise AI leader",
+      "tier": "core"
+    },
+    {
+      "symbol": "MRVL",
+      "added_date": "2026-05-09",
+      "added_reason": "Initial watchlist - AI ASIC demand, NVIDIA partnership",
+      "tier": "core"
+    },
+    {
+      "symbol": "ARM",
+      "added_date": "2026-05-09",
+      "added_reason": "Initial watchlist - AI chip architecture, royalty model",
+      "tier": "core"
+    },
+    {
+      "symbol": "AMZN",
+      "added_date": "2026-05-09",
+      "added_reason": "Initial watchlist - AWS AI infrastructure, retail strength",
+      "tier": "core"
+    },
+    {
+      "symbol": "GOOGL",
+      "added_date": "2026-05-09",
+      "added_reason": "Initial watchlist - search and Gemini AI",
+      "tier": "core"
+    },
+    {
+      "symbol": "PLTR",
+      "added_date": "2026-05-09",
+      "added_reason": "Initial watchlist - enterprise AI, government contracts",
+      "tier": "core"
+    },
+    {
+      "symbol": "AMD",
+      "added_date": "2026-05-09",
+      "added_reason": "Initial watchlist - AI accelerator competitor to NVDA",
+      "tier": "core"
+    },
+    {
+      "symbol": "AVGO",
+      "added_date": "2026-05-09",
+      "added_reason": "Initial watchlist - networking, custom AI chips",
+      "tier": "core"
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-05-09",
+      "action": "initialized",
+      "symbol": "ALL",
+      "reason": "Initial watchlist created from V9.5 protocol Section 3"
+    }
+  ],
+  "notes": "Edit this file directly OR use update_watchlist tool via Claude. Backup before bulk edits. The 'history' array is append-only - never delete entries."
+}

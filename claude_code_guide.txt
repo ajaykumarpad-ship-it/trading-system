@@ -1,0 +1,305 @@
+═══════════════════════════════════════════════════════════════
+CLAUDE CODE — SETUP & USAGE GUIDE
+For: Trading System Validation + GitHub Version Control
+Phone-compatible workflow (TWS not required)
+═══════════════════════════════════════════════════════════════
+
+
+───────────────────────────────────────────────────────────────
+PART 1 — GITHUB SETUP (one-time, free)
+───────────────────────────────────────────────────────────────
+
+GitHub is free for personal use. You do NOT need a paid plan.
+
+STEP 1: Create account
+  → Go to: github.com
+  → Click "Sign up"
+  → Use your personal email
+  → Choose the FREE plan (default)
+
+STEP 2: Create a private repository
+  → After login, click the "+" button → "New repository"
+  → Name it: trading-system
+  → Set visibility: PRIVATE (critical — your trading code
+    must not be publicly visible)
+  → Check "Add a README file"
+  → Click "Create repository"
+
+STEP 3: Authenticate Claude Code with GitHub
+  → Claude Code will prompt you to authenticate
+  → Follow the browser authentication flow it opens
+  → This is a one-time setup
+
+STEP 4: Tell Claude Code your repo address
+  In Claude Code, type:
+    "Connect this project to my GitHub repository
+     github.com/[your-username]/trading-system"
+
+
+───────────────────────────────────────────────────────────────
+PART 2 — INITIAL SETUP OF YOUR TRADING SYSTEM IN CLAUDE CODE
+───────────────────────────────────────────────────────────────
+
+Do this ONCE on your Windows computer (not the phone).
+
+STEP 1: Open Claude Code on your Windows machine
+  (It runs in terminal/command prompt)
+
+STEP 2: Navigate to your trading folder
+  > cd C:\Users\ajayk\Documents\Claude\ibkr-options-mcp
+
+STEP 3: Initialize git and connect to GitHub
+  Just tell Claude Code in plain English:
+
+  "Initialize this folder as a git repository and connect
+   it to my private GitHub repository trading-system"
+
+  Claude Code will run the git commands for you.
+
+STEP 4: Add validate.py to the folder
+  Copy validate.py from the output files into:
+  C:\Users\ajayk\Documents\Claude\ibkr-options-mcp\validate.py
+
+STEP 5: Do the first commit
+  Tell Claude Code:
+
+  "Add all files to git and make the first commit with
+   message: Initial trading system v2.4 with validate.py"
+
+  Claude Code commits and pushes to GitHub automatically.
+
+  Your files are now version-controlled and backed up.
+
+
+───────────────────────────────────────────────────────────────
+PART 3 — USING CLAUDE CODE FROM YOUR PHONE
+───────────────────────────────────────────────────────────────
+
+Claude Code on mobile works through the Claude app.
+TWS does NOT need to be running for these tasks.
+
+HOW IT WORKS ON PHONE:
+  - Claude Code on phone can read/write GitHub files directly
+  - It does NOT need access to your local Windows machine
+  - Think of GitHub as the bridge between your phone and PC
+
+IMPORTANT: For Claude Code to work from your phone without
+the PC being on, you need to have pushed your files to GitHub
+first (Part 2 above). After that, Claude Code on your phone
+reads from GitHub, not from your PC.
+
+
+───────────────────────────────────────────────────────────────
+PART 4 — RUNNING THE VALIDATOR (the most important command)
+───────────────────────────────────────────────────────────────
+
+After any change to server.py or the watchlist files,
+run this validation to confirm everything is consistent.
+
+ON YOUR WINDOWS PC (with Claude Code in terminal):
+  Navigate to your folder and say:
+
+  "Run the validate.py script and show me the results"
+
+  Claude Code will execute:
+    python validate.py
+
+  Expected output: 65 checks, all green, summary shows
+  🟢 ALL CHECKS PASSED
+
+ON YOUR PHONE (via Claude Code app):
+  "Check my trading-system repository on GitHub and run
+   validate.py on the current server.py — show me the
+   validation summary"
+
+  Claude Code will:
+  1. Pull the latest files from your GitHub repository
+  2. Run validate.py
+  3. Show you the pass/fail summary
+
+IF IT SHOWS FAILURES:
+  "Show me the failed checks in detail and suggest fixes"
+
+  Claude Code will explain what's wrong and offer to fix it.
+
+
+───────────────────────────────────────────────────────────────
+PART 5 — DAILY/WEEKLY CLAUDE CODE TASKS
+───────────────────────────────────────────────────────────────
+
+These are safe to do from phone. None require TWS.
+
+AFTER UPDATING SERVER.PY (run from PC or phone):
+  "Validate the trading system after this update"
+  → Runs validate.py, confirms 65 checks pass
+  → Commits the update to GitHub with a description
+
+AFTER UPDATING A WATCHLIST FILE:
+  "I updated bear_watchlist.json to add SNAP.
+   Validate the watchlist files and commit to GitHub"
+  → Checks JSON is valid, symbols correct, size in range
+  → Commits with message "Added SNAP to bear watchlist"
+
+WEEKLY BACKUP (phone, Sunday morning):
+  "Show me what changed in the trading system this week"
+  → Pulls git log from GitHub
+  → Summarizes changes since last Sunday
+  → Confirms latest validation still passes
+
+REVIEWING VERSION HISTORY:
+  "Show me the last 5 changes to server.py"
+  → Pulls git log with diffs from GitHub
+  → Shows exactly what changed in each version
+
+ROLLING BACK A BAD CHANGE:
+  "The last server.py update broke something.
+   Roll back to the previous version"
+  → Reverts the last commit on GitHub
+  → You then download the reverted file to your PC
+
+
+───────────────────────────────────────────────────────────────
+PART 6 — WHAT CLAUDE CODE SHOULD NOT DO
+───────────────────────────────────────────────────────────────
+
+These tasks are for Claude Desktop (your trading projects),
+NOT for Claude Code:
+
+  ✗ Analyzing stock setups or spread trades
+  ✗ Connecting to IBKR or TWS
+  ✗ Running the daily session start
+  ✗ Pulling options chains or IV rank data
+  ✗ Generating execution tickets
+
+Claude Code is a SOFTWARE ENGINEER tool.
+Claude Desktop is your TRADING ADVISOR tool.
+
+Never mix the two roles.
+
+
+───────────────────────────────────────────────────────────────
+PART 7 — WHAT THE VALIDATE.PY SCRIPT CHECKS
+───────────────────────────────────────────────────────────────
+
+65 automated checks across 11 categories:
+
+  1. FILE EXISTENCE (4 checks)
+     All required files are in the folder
+
+  2. SERVER.PY SYNTAX (1 check)
+     Python can parse the file without errors
+
+  3. SERVER VERSION CONSISTENCY (4 checks)
+     Header, serverInfo response, and startup log
+     all agree on the version number
+
+  4. TOOLS_DISPATCH (2 checks)
+     Correct count (21), no duplicates
+
+  5. TOOLS_LIST (2 checks)
+     Correct count (21), no duplicates
+
+  6. DISPATCH vs LIST (3 checks)
+     Both sets are identical — no orphaned registrations
+
+  7. TOOL FUNCTION DEFINITIONS (1 check)
+     Every registered tool has an actual async function
+
+  8. WATCHLIST FILE VALIDATION (27 checks)
+     Each of the 3 watchlist files is checked for:
+     valid JSON, required keys, correct size range,
+     valid ticker symbols, no duplicates within the file
+
+  9. CROSS-WATCHLIST OVERLAP (3 checks)
+     Bull+Bear overlap = only AMD (intentional)
+     Other overlaps documented (correlation risk)
+
+  10. KEY SERVER SECTIONS (12 checks)
+      All critical identifiers present in server.py
+
+  11. BEAR TOOLS SPECIFICALLY (7 checks)
+      All 3 bear tools dispatched, implemented,
+      and scan_combined_setups correctly reads both
+      watchlists and resolves same-ticker conflicts
+
+WHEN TO RUN IT:
+  → After every change to server.py
+  → After adding/removing watchlist entries
+  → Before deploying a new version
+  → Weekly as a health check
+  → Any time Claude Desktop shows unexpected tool counts
+
+
+───────────────────────────────────────────────────────────────
+PART 8 — WHAT HAPPENS WHEN A CHECK FAILS
+───────────────────────────────────────────────────────────────
+
+The script exits with code 1 (failure) if any check fails.
+It prints exactly which check failed and what was found.
+
+Example failure output:
+
+  ❌ FAIL  TOOLS_DISPATCH has 21 entries
+           → Found: 23  Expected: 21
+
+  ❌ FAIL  No duplicate entries in TOOLS_DISPATCH
+           → Duplicates: {'get_watchlist': 2, 'update_watchlist': 2}
+
+  🔴 2 CHECK(S) FAILED — fix before deploying
+
+You would then tell Claude Code:
+  "Fix the duplicate tool registrations shown by validate.py"
+
+Claude Code reads the failure output, finds the duplicates
+in server.py, removes them, and re-runs the validator to
+confirm the fix.
+
+This is the workflow that would have caught the "23 tools"
+problem automatically — in seconds, before you ever deployed.
+
+
+───────────────────────────────────────────────────────────────
+PART 9 — FILES IN YOUR TRADING SYSTEM REPOSITORY
+───────────────────────────────────────────────────────────────
+
+After setup, your GitHub repository contains:
+
+  trading-system/
+  ├── server.py                 MCP server (v2.4 current)
+  ├── validate.py               Validation script
+  ├── watchlist.json            Bullish options watchlist
+  ├── bear_watchlist.json       Bearish options watchlist
+  ├── swing_watchlist.json      Swing stock watchlist
+  └── README.md                 Auto-created by GitHub
+
+Files NOT in the repository (sensitive — never commit):
+  ✗ IBKR credentials
+  ✗ API keys or tokens
+  ✗ Account statements or PnL records
+  ✗ System prompts (these live in Claude Desktop projects,
+    not in files — and they contain your strategy details)
+
+The repository is private but apply the principle of minimal
+exposure: if it doesn't need to be in the repo, keep it out.
+
+
+───────────────────────────────────────────────────────────────
+QUICK REFERENCE — CLAUDE CODE COMMANDS
+───────────────────────────────────────────────────────────────
+
+Most useful commands to know (say these in plain English):
+
+  "Run validate.py and show me results"
+  "Validate and commit this update to GitHub"
+  "Show me what changed in the last 7 days"
+  "Roll back server.py to the previous version"
+  "Check if validate.py passes on the current GitHub files"
+  "What version of server.py is in GitHub right now?"
+  "Show me the git log for the last 10 commits"
+
+
+═══════════════════════════════════════════════════════════════
+END OF CLAUDE CODE GUIDE
+Last updated: May 2026
+Validation script: validate.py (65 checks, server v2.4)
+═══════════════════════════════════════════════════════════════

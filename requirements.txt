@@ -1,0 +1,8 @@
+# IBKR Options MCP Server — Python Dependencies
+# Install with:  pip install -r requirements.txt
+
+# The ONLY external dependency.
+# ib_async is the maintained fork of ib_insync (original author passed away 2024).
+# It implements the full IBKR TWS API binary protocol internally —
+# no need to install the official IBKR Python API separately.
+ib_async>=2.1.0

@@ -1,0 +1,293 @@
+═══════════════════════════════════════════════════════════════
+SWING ALPHA — USER GUIDE
+NASDAQ-100 Stock Swing Trading | $5,000 Account
+═══════════════════════════════════════════════════════════════
+
+
+───────────────────────────────────────────────────────────────
+ONE-TIME SETUP (do this once)
+───────────────────────────────────────────────────────────────
+
+1. REPLACE server.py with the new v2.2 version:
+   Path: C:\Users\ajayk\Documents\Claude\ibkr-options-mcp\server.py
+
+2. PLACE swing_watchlist.json in the same folder:
+   Path: C:\Users\ajayk\Documents\Claude\ibkr-options-mcp\swing_watchlist.json
+
+   The folder should now contain:
+     - server.py             (v2.2)
+     - watchlist.json        (options, existing)
+     - swing_watchlist.json  (NEW - stock swing)
+
+3. CREATE A NEW CLAUDE PROJECT:
+   In Claude Desktop: New Project → Name it "Swing Alpha"
+   Paste the contents of swing_alpha_v1.0.txt into the
+   project's System Prompt field.
+
+4. CONFIRM MCP CONNECTION:
+   The same ibkr-options MCP serves both projects.
+   No additional configuration needed.
+
+5. RESTART CLAUDE DESKTOP fully.
+
+6. VERIFY: in the Swing Alpha project, type:
+   "Use ibkr-options to get the swing watchlist"
+
+   You should see your 10 swing tickers listed.
+
+
+───────────────────────────────────────────────────────────────
+WHICH PROJECT FOR WHICH TASK
+───────────────────────────────────────────────────────────────
+
+OPTIONS ALPHA project (V9.6):
+  - Bull call/put spread analysis
+  - IV Rank, Greeks, expiry selection
+  - 8 trades/month target
+  - $250 risk per trade (defined by spread)
+
+SWING ALPHA project (V1.0):
+  - Long stock pullback/breakout entries
+  - Hold 5-15 trading days
+  - 8 trades/month target
+  - 1% risk per trade ($50 on $5K account)
+
+The two accounts are separate $5K blocks. Don't mix them.
+
+
+───────────────────────────────────────────────────────────────
+DAILY USE — Swing Alpha session start
+───────────────────────────────────────────────────────────────
+
+In the Swing Alpha project, just say:
+
+   "Run swing daily session"
+
+Claude will:
+  ✓ State today's date and market status
+  ✓ Read your swing watchlist (10 tickers)
+  ✓ Determine market regime (QQQ analysis)
+  ✓ Run the pullback scanner across all watchlist names
+  ✓ Tell you which 0-3 names are TRADEABLE today
+  ✓ Show which are MONITORING and which are BLOCKED
+
+Then drill in:
+   "Analyze NVDA in detail"
+   "Show me the full setup for META"
+   "Run the audit on AVGO breakout"
+
+
+───────────────────────────────────────────────────────────────
+WEEKLY USE — Sunday or Monday before market opens
+───────────────────────────────────────────────────────────────
+
+   "Run the weekly swing scan"
+
+Claude will:
+  ✓ Confirm TWS is running
+  ✓ Warn this takes 3-5 minutes
+  ✓ Score all 100 NDX names against 6 swing criteria
+  ✓ Show health of current swing watchlist
+  ✓ Recommend promotions and demotions
+  ✓ Execute approved changes one at a time
+
+
+───────────────────────────────────────────────────────────────
+COMMON COMMANDS
+───────────────────────────────────────────────────────────────
+
+VIEW THE SWING WATCHLIST:
+   "Show me my swing watchlist"
+   "What's on the swing list?"
+
+ADD A TICKER (with approval flow):
+   "Add CRWD to the swing watchlist
+    reason: cybersecurity leader, clean trend, ATR 2.8%"
+   → Claude shows dry run preview
+   → You confirm
+   → Claude writes to swing_watchlist.json
+
+REMOVE A TICKER:
+   "Remove PLTR from the swing watchlist
+    reason: failed 4 of 6 criteria, broke 50-SMA"
+
+POSITION SIZING ON DEMAND:
+   "Calculate position size: entry $185.50, stop $179.20"
+   → Returns: 7 shares, $1,298 capital, $44.10 risk
+
+ANALYZE A NON-WATCHLIST TICKER:
+   "Analyze TSLA for a swing trade"
+   → Claude notes it's not on watchlist
+   → Asks if you want one-off analysis or to add it
+
+CHECK AN OPEN TRADE:
+   "What's my current R-multiple on the META trade I entered
+    at $612 with stop at $592? Current price is $625."
+   → Claude calculates and tells you which management rule
+     applies (move to breakeven, scale out, hold, etc.)
+
+
+───────────────────────────────────────────────────────────────
+THE 6 SWING SCAN CRITERIA EXPLAINED
+───────────────────────────────────────────────────────────────
+
+  C1 — TREND
+       Price above 50-SMA AND 50-SMA above 200-SMA
+       (Both intermediate and long-term uptrend)
+
+  C2 — RELATIVE STRENGTH
+       Stock 50-day return beats QQQ 50-day return
+       (Outperforming the index)
+
+  C3 — RECENT MOMENTUM
+       Positive 20-day return
+       (Move is current, not stale)
+
+  C4 — LIQUIDITY
+       Average daily volume ≥ 2 million shares
+       (Higher than options watchlist requirement of 1M)
+
+  C5 — TRADEABLE VOLATILITY
+       ATR(14) between 1.5% and 5% of price
+       (Not too tight to make money, not too chaotic)
+
+  C6 — NO BIG GAPS
+       No single-day move > 8% in last 20 days
+       (Avoids stocks with earnings-style gap behavior)
+
+  MODERATE: pass 4 of 6 (default)
+  STRICT: pass 5 of 6 (use rarely)
+
+
+───────────────────────────────────────────────────────────────
+THE PULLBACK SETUP — WHAT TO LOOK FOR
+───────────────────────────────────────────────────────────────
+
+The scanner identifies a TRADEABLE pullback when ALL of these
+are true:
+
+  1. Stock in confirmed uptrend
+  2. Pullback 3-8% from recent swing high
+  3. Pullback has lasted 3-15 trading days
+  4. Volume on pullback days < volume on prior advance
+  5. Reversal candle printed yesterday
+       (Hammer / Engulfing / Strong Bull / Inside Bar)
+  6. Today: price still holds above pullback low
+
+Entry: BUY STOP at $0.01 above yesterday's high
+Stop:  Below pullback low or 1.5× ATR (whichever closer)
+T1:    Entry + 2× risk per share (sell 50% here)
+T2:    Entry + 4× risk per share (trail rest with 2× ATR)
+
+
+───────────────────────────────────────────────────────────────
+TRADE MANAGEMENT QUICK REFERENCE
+───────────────────────────────────────────────────────────────
+
+WHEN PRICE REACHES +1R:
+   Move stop to entry price (breakeven)
+   Cancel old stop, replace with GTC at entry
+
+WHEN PRICE REACHES +2R:
+   SELL 50% of shares at market
+   Move stop on remaining 50% to entry + 1R
+
+AFTER +2R (TRAILING):
+   Each day: new_trail = today's close - (2 × ATR)
+   Stop only moves UP, never down
+
+TIME STOP (DAY 10):
+   If trade hasn't reached +1R in 10 days: exit at market
+
+REGIME REVERSAL:
+   If QQQ flips 🟢 → 🟠 → 🔴 in any 2-day window:
+   Close all open longs immediately
+
+
+───────────────────────────────────────────────────────────────
+SAFETY FEATURES BUILT IN
+───────────────────────────────────────────────────────────────
+
+  ✅ Approval gate on watchlist changes
+     update_swing_watchlist requires confirmed=true
+
+  ✅ Min/max size limits
+     min=6, max=12 enforced by server
+
+  ✅ Append-only history
+     Every change logged with date and reason
+
+  ✅ Hot reload
+     Changes apply immediately, no restart needed
+
+  ✅ Position size auto-calc
+     Never accidentally over-size a trade
+
+  ✅ Separate from options watchlist
+     Changes in one don't affect the other
+
+
+───────────────────────────────────────────────────────────────
+COMMON ISSUES
+───────────────────────────────────────────────────────────────
+
+PROBLEM: "swing_watchlist.json not found"
+  → Place file at C:\Users\ajayk\Documents\Claude\ibkr-options-mcp\
+  → Server falls back to default 10 tickers if missing
+
+PROBLEM: scan_swing_universe takes too long or errors
+  → TWS must be running and logged in
+  → 3-5 minutes is normal for full NDX-100 scan
+  → If timing out, run during market hours for fastest data
+
+PROBLEM: "no tradeable pullback setups today"
+  → This is NORMAL
+  → Some days will have 0 setups, some will have 3
+  → Forcing a trade just to be in the market is the
+    biggest mistake you can make
+  → Patience compounds
+
+
+───────────────────────────────────────────────────────────────
+MONTHLY MAINTENANCE
+───────────────────────────────────────────────────────────────
+
+  Once a month:
+    - Backup swing_watchlist.json (just copy the file)
+    - Review your trade log: win rate, avg R-multiple
+    - Check pullback setups vs breakout setups —
+      which performed better?
+    - If win rate < 35% over 20 trades: pause and review
+      which rules you bent or skipped
+
+
+───────────────────────────────────────────────────────────────
+THE 17 TOOLS ON THE SERVER
+───────────────────────────────────────────────────────────────
+
+OPTIONS PROJECT (5):
+  get_options_chain, get_spread_analysis, get_stock_quote,
+  get_watchlist_scan, get_iv_rank
+
+OPTIONS WATCHLIST (3):
+  get_watchlist, update_watchlist, scan_full_universe
+
+INTRADAY MOMENTUM (3 — neither project uses these primarily):
+  momentum_scan, get_momentum_bars, trade_update
+
+SWING PROJECT (6 — what this guide covers):
+  get_swing_watchlist        Read swing universe
+  update_swing_watchlist     Add/remove with approval
+  scan_swing_universe        Weekly scan
+  get_swing_setup            Full pullback/breakout analysis
+  get_position_size          Calculate exact shares
+  scan_pullback_setups       Daily tradeable scanner
+
+The Swing Alpha project predominantly uses the 6 swing tools
+plus get_stock_quote when needed. The others are available
+but rarely needed in this project's workflow.
+
+
+═══════════════════════════════════════════════════════════════
+END OF USER GUIDE
+═══════════════════════════════════════════════════════════════

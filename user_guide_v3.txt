@@ -1,0 +1,463 @@
+═══════════════════════════════════════════════════════════════
+UNIFIED TRADING SYSTEM — USER GUIDE v3
+Options Alpha V9.9  +  Swing Alpha V1.1  +  IBKR MCP v2.4
+Account: 2 × $5,000 IBKR Pro blocks | Updated: May 2026
+═══════════════════════════════════════════════════════════════
+
+
+───────────────────────────────────────────────────────────────
+THE TWO PROJECTS AT A GLANCE
+───────────────────────────────────────────────────────────────
+
+  OPTIONS ALPHA (V9.9)          SWING ALPHA (V1.1)
+  ───────────────────           ──────────────────
+  Bull call debit spreads        Long stock shares
+  Bear put debit spreads         (long only for now)
+  $250 risk per trade            $50 risk per trade (1%)
+  2 contracts standard           Variable shares (ATR-sized)
+  8 trades/month target          8 trades/month target
+  5 simultaneous max             5 simultaneous max
+  Bull hold: 30-45 DTE           Hold: 5-15 days (winners)
+  Bear hold: 15-30 DTE           Break-even WR: ~33%
+  Win rate target: 78-82%        Win rate target: 45-55%
+
+Both projects share:
+  - The same IBKR MCP server (v2.3) on your computer
+  - The same NDX universe approach
+  - 7 overlapping watchlist names (NVDA, META, MSFT, AMZN,
+    GOOGL, AVGO, AMD) — be aware of correlation risk
+  - 5-position cap per account (enforced via get_open_positions)
+
+
+───────────────────────────────────────────────────────────────
+FILE LOCATIONS  (Windows: C:\Users\ajayk\Documents\Claude\)
+───────────────────────────────────────────────────────────────
+
+  ibkr-options-mcp\
+  ├── server.py              v2.4  (THE MCP SERVER)
+  ├── watchlist.json         Bullish options watchlist (10 names)
+  ├── bear_watchlist.json    Bearish options watchlist (10 names) NEW
+  └── swing_watchlist.json   Swing watchlist (10 names)
+
+  Claude project system prompts (pasted into Claude Desktop):
+  ├── Options Alpha project → system_prompt_v9.8.txt
+  └── Swing Alpha project   → swing_alpha_v1.1.txt
+
+
+───────────────────────────────────────────────────────────────
+ONE-TIME DEPLOYMENT (do this once, after audit fixes)
+───────────────────────────────────────────────────────────────
+
+  1. Quit Claude Desktop fully
+  2. Replace server.py at the path above with v2.4
+  3. Confirm watchlist.json is present (unchanged)
+  4. Confirm swing_watchlist.json is present (unchanged)
+  5. Place bear_watchlist.json in the same folder (NEW)
+  6. Open Claude Desktop
+  7. For Options Alpha project:
+       Open project → Settings → System Prompt
+       Replace contents with system_prompt_v9.9.txt
+       Save
+  8. For Swing Alpha project:
+       No change needed — Swing Alpha V1.1 unchanged
+  9. In Options Alpha project, verify:
+       "How many tools do you have?"
+       Should show 21 tools available.
+
+
+───────────────────────────────────────────────────────────────
+DAILY ROUTINE (when actively trading)
+───────────────────────────────────────────────────────────────
+
+  BEFORE MARKET OPEN (5-10 minutes) — OPTIONS ALPHA:
+    "Run options daily session start"
+
+  This now runs scan_combined_setups automatically and gives you:
+    - Today's date and market status
+    - QQQ regime (🟢/🟡/🟠/🔴)
+    - TOP 3 RANKED SETUPS — mix of 📈 bull and 📉 bear, best first:
+
+    Example output:
+    ────────────────────────────────────────────────────────
+    RANK 1: TSLA  📉 BEAR PUT SPREAD  Score: 11.5  A-Grade
+      Entry: Buy $175/$170 put, Jun expiry (21 DTE)
+      Cost: $1.18 debit | Max risk: $250 | ROI: 69%
+
+    RANK 2: NVDA  📈 BULL CALL SPREAD  Score: 10.5  A-Grade
+      Entry: Buy $185/$190 call, Jun expiry (35 DTE)
+      Cost: $1.20 debit | Max risk: $250 | ROI: 58%
+
+    RANK 3: DDOG  📉 BEAR PUT SPREAD  Score: 9.0   B-Grade
+      Entry: Buy $115/$110 put, Jun expiry (18 DTE)
+      Cost: $1.10 debit | Max risk: $125 (1 contract) | ROI: 55%
+    ────────────────────────────────────────────────────────
+
+  Then drill into the top-ranked setup:
+    "Run full analysis on TSLA bearish spread"
+    Claude runs Phase 0A → Phase 4 ticket
+
+  SWING ALPHA daily (unchanged):
+    "Run swing daily session start"
+
+  AFTER MARKET CLOSE (both accounts, 4:15-4:45 PM ET):
+    "Review my open options positions"
+    "Review my open swing positions"
+
+
+───────────────────────────────────────────────────────────────
+WEEKLY ROUTINE (Sunday or Monday pre-market)
+───────────────────────────────────────────────────────────────
+
+  In Options Alpha:  "Run the weekly watchlist scan"
+  In Swing Alpha:    "Run the weekly swing scan"
+
+  Each scan:
+    - Takes 3-5 minutes
+    - Pulls live data for all ~100 NDX-100 stocks
+    - Scores against the relevant criteria (4 for options,
+      6 for swing — see criteria sections below)
+    - Reports health of current watchlist
+    - Recommends specific names to demote/promote
+
+  You approve each change individually. Claude never modifies
+  the watchlists without your explicit "yes" per change.
+
+
+───────────────────────────────────────────────────────────────
+COMMON COMMANDS — OPTIONS ALPHA PROJECT
+───────────────────────────────────────────────────────────────
+
+  Daily setup:
+    "Run options daily session start"
+    "What are the top 3 setups today?"  ← NEW primary command
+
+  Analysis:
+    "Analyze NVDA for a bull call spread"
+    "Analyze TSLA for a bear put spread"   ← NEW
+    "Run full audit on META bearish setup" ← NEW
+    "What strikes for DDOG bear put 20 DTE?" ← NEW
+
+  Watchlists:
+    "Show me the bullish options watchlist"
+    "Show me the bearish options watchlist"  ← NEW
+    "Add CRWD to the bull watchlist - reason: AI security leader"
+    "Add SNAP to the bear watchlist - reason: weak RS, below 50-EMA" ← NEW
+    "Remove PLTR from bull watchlist - reason: failed 3 criteria"
+
+  Position checks (unchanged):
+    "How many spreads are currently open?"
+    "Review my open positions"
+
+
+───────────────────────────────────────────────────────────────
+COMMON COMMANDS — SWING ALPHA PROJECT
+───────────────────────────────────────────────────────────────
+
+  Daily setup:
+    "Run swing daily session start"
+    "Any tradeable pullbacks today?"
+
+  Analysis:
+    "Analyze NVDA for a pullback entry"
+    "Show me the full swing setup for META"
+    "Run audit on AVGO breakout"
+
+  Position checks:
+    "How many swing positions open?"   (uses get_open_positions)
+    "What's my current R-multiple on the META trade?"
+
+  Watchlist:
+    "Show me the swing watchlist"
+    "Add CRWD to the swing watchlist - reason: clean uptrend"
+    "Remove COST - reason: low volatility, no setups firing"
+
+  Position sizing:
+    "Calculate position size: entry $185.50, stop $179.20"
+       → Returns: 7 shares, $1,298 capital, $44.10 risk
+
+
+───────────────────────────────────────────────────────────────
+OPTIONS ALPHA — 9-POINT AUDIT (V9.8)
+───────────────────────────────────────────────────────────────
+
+Every options trade must pass ALL 9 before execution:
+
+   1. TREND       Price above 21-day EMA on daily?
+   2. VIX REGIME  Strategy type matches VIX level?
+   3. EARNINGS    Multi-source verified earnings clear?
+   4. LIQUIDITY   Bid-ask spread < 5% of premium?
+   5. OI          Both legs have ≥500 open interest?
+   6. DELTA       Long leg delta 0.40-0.55?
+   7. RISK CAP    Max risk ≤ $125/contract = $250 for 2?
+   8. ROI         Max profit / max risk ≥ 40%?
+   9. DTE         Debit: 30-45 DTE | Credit: 10-15 DTE?
+
+  PLUS Phase 3B: Open position count check (must be <5)
+
+
+───────────────────────────────────────────────────────────────
+SWING ALPHA — 9-POINT AUDIT (V1.1)
+───────────────────────────────────────────────────────────────
+
+Every swing trade must pass ALL 9 before execution:
+
+   1. EARNINGS    No earnings in next 10 trading days?
+   2. WATCHLIST   Is ticker on swing watchlist?
+   3. REGIME      QQQ 🟢 STRONG or 🟡 WEAK?
+   4. TREND       Stock above 50-EMA AND 50 above 200?
+   5. RS          RS_20 AND RS_50 both ≥ 0?
+   6. SETUP       All pullback rules (7) or breakout rules (6) met?
+   7. STOP SANITY Risk per share 0.5×-3× ATR(14)?
+   8. SIZE        Capital required < $2,500 (50% of account)?
+   9. OPEN COUNT  Currently <5 swing positions open?
+
+  Note: Check 1 (earnings) is FIRST so you don't waste analysis
+  time on names that will fail anyway.
+
+
+───────────────────────────────────────────────────────────────
+SETUP DEFINITIONS — SWING ALPHA
+───────────────────────────────────────────────────────────────
+
+  PULLBACK (primary, 70% of trades) — needs ALL 7:
+    1. Earnings runway clear (>10 trading days out)
+    2. Confirmed uptrend (above 50-SMA, 50 > 200)
+    3. Pullback structure: 3-8% deep, 3-15 days long,
+       retrace to 21-EMA / 50-EMA / proven support
+    4. Volume LOWER on pullback than prior advance
+    5. Confirmation candle (hammer/engulfing/strong bull/inside)
+    6. Entry: BUY STOP at $0.05 above confirmation candle high
+    7. Stop: MIN of swing low or 1.5×ATR (whichever closer)
+
+  BREAKOUT (secondary, 30% of trades) — needs ALL 6:
+    1. Earnings runway clear (>10 trading days out)
+    2. Consolidation base ≥4 weeks, <8% range
+    3. Clear horizontal resistance with 2+ rejections
+    4. Volume ≥150% of 20-day avg on breakout day
+    5. Daily CLOSE above resistance (not just intraday)
+    6. Next resistance ≥5% above breakout
+
+  ENTRY for breakouts: BUY STOP at $0.10 above breakout day high
+  STOP for breakouts: $0.10 below broken resistance
+
+
+───────────────────────────────────────────────────────────────
+EXIT MANAGEMENT — BOTH PROJECTS
+───────────────────────────────────────────────────────────────
+
+  OPTIONS ALPHA:
+    At +1R (50% of max risk):  Move stop to original debit
+    At +35% max profit:         Scale 1 contract (of 2)
+    Day 5 no +1R:               Time stop exit
+    21 DTE (debit) / 10 DTE (credit): Mandatory exit
+    Regime flips to 🔴:          Close ALL immediately
+
+  SWING ALPHA:
+    At +1R:                     Move stop to breakeven
+    At +2R:                     Sell 50%, raise stop to +1R
+    After +2R:                  Trail rest with 2×ATR
+    Day 10 no +1R:              Time stop exit at market
+    Regime flips 🟢→🟠→🔴:        Close ALL immediately
+
+
+───────────────────────────────────────────────────────────────
+WEEKLY SCAN CRITERIA — OPTIONS ALPHA (4 criteria, pass 3)
+───────────────────────────────────────────────────────────────
+
+   C1. TREND      Price above 50-SMA AND 50-SMA above 200-SMA
+   C2. RS         50-day stock return > 50-day QQQ return
+   C3. MOMENTUM   Positive 20-day return
+   C4. LIQUIDITY  Average daily volume ≥ 1M shares
+
+  Default threshold: moderate (3 of 4)
+  Hard rule: must always pass C1 (the trend filter)
+
+
+───────────────────────────────────────────────────────────────
+WEEKLY SCAN CRITERIA — SWING ALPHA (6 criteria, pass 4)
+───────────────────────────────────────────────────────────────
+
+   C1. TREND      Above 50-SMA AND 50 above 200-SMA
+   C2. RS         50-day return > QQQ 50-day return
+   C3. MOMENTUM   Positive 20-day return
+   C4. LIQUIDITY  Average daily volume ≥ 2M shares (higher bar)
+   C5. VOLATILITY ATR/price between 1.5% and 5% (tradeable)
+   C6. NO GAPS    No single-day move >8% in last 20 days
+
+  Default threshold: moderate (4 of 6)
+  Use strict (5 of 6) only if you want fewer, higher-quality
+  candidates.
+
+
+───────────────────────────────────────────────────────────────
+THE 18 TOOLS — WHICH PROJECT USES WHICH
+───────────────────────────────────────────────────────────────
+
+  OPTIONS ALPHA primarily uses:
+    get_options_chain, get_spread_analysis, get_stock_quote,
+    get_watchlist_scan, get_iv_rank,
+    get_watchlist, update_watchlist, scan_full_universe,
+    get_bear_watchlist, update_bear_watchlist,
+    scan_combined_setups,    ← PRIMARY DAILY TOOL (NEW)
+    get_open_positions
+
+  SWING ALPHA primarily uses (unchanged):
+    get_swing_watchlist, update_swing_watchlist,
+    scan_swing_universe, get_swing_setup, get_position_size,
+    scan_pullback_setups, get_stock_quote, get_open_positions
+
+  Not used in either project (intraday momentum tools):
+    momentum_scan, get_momentum_bars, trade_update
+
+
+───────────────────────────────────────────────────────────────
+CORRELATION RISK — IMPORTANT
+───────────────────────────────────────────────────────────────
+
+  Both watchlists share 7 names: NVDA, META, MSFT, AMZN,
+  GOOGL, AVGO, AMD.
+
+  This means a tech selloff hits both accounts simultaneously.
+  Worst-case scenario for a single ticker (say NVDA):
+    Options book max loss: $250
+    Swing book max loss:   $50
+    Combined: $300 = 3% of total $10K household capital
+
+  When entering a position in one project, ALWAYS check:
+    "Do I already hold this ticker in the other account?"
+
+  Claude will ask this in both projects via Phase 3B (options)
+  and Check 9 (swing). Honor the warning — consider sizing down
+  or skipping when both accounts would hold the same name.
+
+
+───────────────────────────────────────────────────────────────
+WHAT TO DO BEFORE GOING LIVE
+───────────────────────────────────────────────────────────────
+
+  1. Deploy V9.8 + V1.1 + server v2.3 (steps above)
+
+  2. In TWS, switch to PAPER TRADING port (7497)
+     Both projects can run identically against paper account.
+
+  3. Run 3-5 paper trades in each project:
+     - Verify the daily routine works end-to-end
+     - Verify the audit catches bad setups
+     - Verify position sizing is correct
+     - Verify the management rules trigger correctly
+     - Practice IBKR order entry mechanics
+
+  4. Review paper trade log after each completion:
+     - Did Claude correctly identify the setup?
+     - Did the math match between Claude's calculation
+       and your actual fill?
+     - Did the management routine trigger at the right times?
+
+  5. Only after 3+ successful paper trades per strategy:
+     Switch to live port (7496), start with 1 contract /
+     half-size shares for first 3-5 live trades.
+
+  6. Full size only after 10 documented live trades with
+     positive expectancy.
+
+
+───────────────────────────────────────────────────────────────
+RISK OF RUIN — KNOW WHEN TO STOP
+───────────────────────────────────────────────────────────────
+
+  OPTIONS ALPHA:
+    Yellow alert: 3 consecutive losses → reduce to 5 trades/2wk
+    Red alert (Scenario A): 5 CONSECUTIVE losses → STOP, review
+    Red alert (Scenario B): 5 simultaneous positions all lose
+                            in regime crash → 2-week pause,
+                            resume at 2 simultaneous positions
+
+  SWING ALPHA:
+    Yellow alert: 4 consecutive losses → pause 1 week, review
+    Red alert: 6 consecutive losses → STOP, resume at 0.5% risk
+
+  These rules are non-negotiable. If you hit them, follow them.
+
+
+───────────────────────────────────────────────────────────────
+TROUBLESHOOTING
+───────────────────────────────────────────────────────────────
+
+  "ibkr-options MCP not connected"
+    → TWS must be running and logged in
+    → Check API settings: TWS → Edit → Global Configuration →
+      API → Settings → "Enable ActiveX and Socket Clients"
+    → Verify port matches server.py (7497 paper / 7496 live)
+
+  "Tool count shows 17 not 18"
+    → server.py is still v2.2 — replace with v2.3
+    → Quit Claude Desktop fully and reopen
+
+  "scan times out"
+    → Normal for first run after market open (data caching)
+    → Run during market hours for fastest response
+    → If still timing out, restart TWS
+
+  "get_open_positions returns nothing but I have positions"
+    → Confirm TWS is connected to right account
+    → Paper vs Live accounts have separate positions
+    → Verify port number matches the account
+
+  "Audit fails on a setup that looks good"
+    → Trust the audit. It exists to save you from yourself.
+    → Document the rejection in your notes for monthly review
+    → If a SPECIFIC rule keeps blocking GOOD trades after 20+
+      examples, that's data for tightening or loosening it.
+      Don't override on a hunch.
+
+
+───────────────────────────────────────────────────────────────
+MONTHLY REVIEW (do this on the 1st of each month)
+───────────────────────────────────────────────────────────────
+
+  In each project:
+    "Show me the trade log for last 30 days"
+    "What's my win rate?"
+    "What's my average R-multiple?"
+    "Which filter rejected the most setups?"
+
+  Look for:
+    - Win rate trending up or down vs target
+    - Same exit reason repeating (e.g., always time-stopping)
+    - Pattern in losers (e.g., all losers in 🟡 regime)
+    - Confirmation pattern hit rate (V1.1 swing log captures this)
+
+  After 30 trades total across both projects:
+    Reassess the protocols. Tighten or loosen specific rules
+    based on data, not feelings.
+
+  Backup your watchlist files monthly:
+    Just copy watchlist.json and swing_watchlist.json
+    to a safe folder. The history array preserves your
+    decision audit trail.
+
+
+───────────────────────────────────────────────────────────────
+GOLDEN RULES — DO NOT VIOLATE
+───────────────────────────────────────────────────────────────
+
+  1. NEVER trade without running the full audit
+     (9-point for bull, 10-point for bear)
+  2. NEVER exceed 5 positions per account
+  3. NEVER override the regime filter for NEW BULLISH entries
+     (🟠/🔴 = no new bull entries; 🔴 can favor bearish entries)
+  4. NEVER hold credit spreads inside 10 DTE
+  5. NEVER hold bull debit spreads inside 21 DTE
+  6. NEVER hold bear debit spreads inside 10 DTE
+     (shorter because bearish moves expire faster)
+  7. NEVER trade through earnings (14-day buffer for bearish)
+  8. NEVER skip the trade log (you need the data)
+  9. NEVER size up on a "feeling about this one"
+  10. NEVER hold a bearish spread more than 3 days without +1R
+      (time stop is SHORTER for bearish — 3 days not 5)
+
+═══════════════════════════════════════════════════════════════
+END OF USER GUIDE v3
+Last updated: May 2026 for V9.9 + V1.1 + server v2.4
+3 watchlist files | 21 MCP tools | Bidirectional options trading
+═══════════════════════════════════════════════════════════════

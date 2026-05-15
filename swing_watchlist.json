@@ -1,0 +1,78 @@
+{
+  "watchlist_name": "SwingAlpha_Active",
+  "version": "1.0",
+  "max_size": 12,
+  "min_size": 6,
+  "last_updated": "2026-05-10",
+  "tickers": [
+    {
+      "symbol": "NVDA",
+      "added_date": "2026-05-10",
+      "added_reason": "Initial - AI chip leader, smooth uptrend, high liquidity",
+      "tier": "core"
+    },
+    {
+      "symbol": "META",
+      "added_date": "2026-05-10",
+      "added_reason": "Initial - AI monetization, healthy pullback character",
+      "tier": "core"
+    },
+    {
+      "symbol": "MSFT",
+      "added_date": "2026-05-10",
+      "added_reason": "Initial - mega-cap stability, smooth trends, low gap risk",
+      "tier": "core"
+    },
+    {
+      "symbol": "AMZN",
+      "added_date": "2026-05-10",
+      "added_reason": "Initial - AWS leader, predictable trend behavior",
+      "tier": "core"
+    },
+    {
+      "symbol": "GOOGL",
+      "added_date": "2026-05-10",
+      "added_reason": "Initial - search dominance, ATR/price range ideal for swing",
+      "tier": "core"
+    },
+    {
+      "symbol": "AVGO",
+      "added_date": "2026-05-10",
+      "added_reason": "Initial - networking/AI chips, strong RS, good liquidity",
+      "tier": "core"
+    },
+    {
+      "symbol": "AMD",
+      "added_date": "2026-05-10",
+      "added_reason": "Initial - AI accelerator, more volatile but tradeable",
+      "tier": "core"
+    },
+    {
+      "symbol": "CRWD",
+      "added_date": "2026-05-10",
+      "added_reason": "Initial - cybersecurity leader, clean trend structure",
+      "tier": "core"
+    },
+    {
+      "symbol": "NFLX",
+      "added_date": "2026-05-10",
+      "added_reason": "Initial - streaming leader, decent ATR, clean pullbacks",
+      "tier": "core"
+    },
+    {
+      "symbol": "COST",
+      "added_date": "2026-05-10",
+      "added_reason": "Initial - retail steady trender, low volatility complement",
+      "tier": "core"
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-05-10",
+      "action": "initialized",
+      "symbol": "ALL",
+      "reason": "Initial swing watchlist for Swing Alpha V1.0 project"
+    }
+  ],
+  "notes": "This is a SEPARATE watchlist from the options project. Selection criteria emphasize swing-trading characteristics: smooth uptrends, ATR 1.5-5% of price, liquid 2M+ daily volume, low gap risk. Edit via update_swing_watchlist tool, not by hand."
+}
